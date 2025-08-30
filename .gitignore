@@ -39,7 +39,11 @@ build/Release
 
 # Dependency directories
 node_modules/
+.pnpm/
 jspm_packages/
+
+# additional pnpm tools
+.pnpm-debug.log
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

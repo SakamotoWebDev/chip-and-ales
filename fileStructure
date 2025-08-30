@@ -1,0 +1,75 @@
+/src
+  /app
+    App.tsx                 
+    routes.tsx
+    providers.tsx           # Zustand Provider, Theme, ErrorBoundary
+  /pages
+    homePage.tsx            # new match, players, rules
+    gamePage.tsx            # live scoreboard + round flow
+    matchSummaryPage.tsx    # recap/export
+  /components               # dumb/presentational
+    /common
+      button.tsx
+      card.tsx
+      modal.tsx
+      numberInput.tsx
+      toggle.tsx
+      timerDisplay.tsx
+      chipBadge.tsx
+      scorePill.tsx
+    /scoreboard
+      leaderboard.tsx
+      targetBadge.tsx
+    /round
+      roundBanner.tsx       # starting location + order
+      shotQueue.tsx
+      judgeGrid.tsx         # pick closest (rank-only UI)
+      puttsPanel.tsx
+      roundDeltaStrip.tsx   # +1/+2/+4 badges
+    /forms
+***      playerEditor.tsx
+***      handicapEditor.tsx
+***      timerEditor.tsx
+  /features                 # stateful “smart” widgets per domain
+    /setup
+      matchSetup.tsx
+      playerSetup.tsx
+      ruleSetup.tsx
+    /minigame
+      gameDashboard.tsx
+      startLocationPicker.tsx
+      playerOrderConfirm.tsx
+      endRoundSummary.tsx
+      gameResult.tsx
+    /chipping
+      ChippingController.tsx
+    /putting
+      PuttingController.tsx
+    /history
+***      UndoRedoBar.tsx
+  /store                    # Zustand slices & root store
+*    createStore.ts
+    players.slice.ts
+    settings.slice.ts
+    minigame.slice.ts
+    rounds.slice.ts
+    chipping.slice.ts
+    putting.slice.ts
+    score.slice.ts        # pure engine + selectors
+    timer.slice.ts
+    history.slice.ts
+    persist.middleware.ts
+  /lib
+    scoreEngine.ts        # pure, deterministic functions
+    orderEngine.ts          # highest→lowest + tie-break
+    validation.ts
+    id.ts                   # nanoid wrappers
+    time.ts
+    export.ts               # JSON/CSV exporter
+  /types
+    domain.ts               # shared TS types/interfaces
+    events.ts               # event enum + payload shapes
+  /styles
+    index.css
+  main.tsx
+  index.html

@@ -3,9 +3,7 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { ErrorBoundary } from 'react-error-boundary'
 import { StoreProvider } from '../store/createStore'
 
-interface ProvidersProps {
-  children: ReactNode
-}
+interface ProvidersProps { children: ReactNode }
 
 export function ThemeProvider({ children }: ProvidersProps) {
   return (
@@ -17,4 +15,8 @@ export function ThemeProvider({ children }: ProvidersProps) {
       </StoreProvider>
     </ErrorBoundary>
   )
+}
+
+export default function Providers({ children }: ProvidersProps) {
+  return <ThemeProvider>{children}</ThemeProvider>
 }

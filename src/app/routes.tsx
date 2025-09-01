@@ -1,5 +1,5 @@
 // /src/app/routes.tsx
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import HomePage from '../pages/homePage'
 import GamePage from '../pages/gamePage'
 import MatchSummaryPage from '../pages/matchSummaryPage'
@@ -14,7 +14,7 @@ function DebugPage() {
 
 export function AppRoutes() {
   return (
-    <BrowserRouter>
+//    <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/game" element={<GamePage />} />
@@ -22,6 +22,7 @@ export function AppRoutes() {
         <Route path="/__debug" element={<DebugPage />} />
         <Route path="*" element={<Navigate to="/__debug" replace />} />
       </Routes>
-    </BrowserRouter>
+//    </BrowserRouter>
   )
 }
+

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useRootStore } from '../../store/createStore'
-import { PlayerId, PuttResult, ScoreDelta, RoundRecord } from '../../types/domain'
+import type { PlayerId, ScoreDelta, RoundRecord } from '../../types/domain'
 import { GameEventType } from '../../types/events'
 import { formatTime } from '../../lib/time'
 import { generateId } from '../../lib/id'
@@ -82,14 +82,22 @@ export default function PuttingController({ roundId, closestWinnerId, onRoundCom
   }
 
   const computeRoundWinnerId = (deltas: ScoreDelta[]): PlayerId | undefined => {
-    // Rule of thumb for “round winner” (decides next start location):
-    // - If any chip hole-out happened: that player is the round winner.
-    // - Else: the closest chip winner.
-    if (someoneHoled) {
-      // If (somehow) multiple hole-outs happen, pick the first (should be rare/impossible in practice).
-      return chipResults.find((c: { holed: any }) => c.holed)?.playerId
+    // Winner = unique highest total for the round (chip + putt). Ties => no winner.
+    if (!deltas.length) return undefined
+    const totals = new Map<PlayerId, number>()
+    for (const d of deltas) {
+      const pid = d.playerId as PlayerId
+      totals.set(pid, (totals.get(pid) ?? 0) + d.delta)
     }
-    return closestWinnerId
+    let winnerId: PlayerId | undefined
+    let max = -Infinity
+    let tie = false
+    for (const [pid, total] of totals) {
+      if (total > max) { max = total; winnerId = pid; tie = false }
+      else if (total === max) { tie = true }
+    }
+    if (tie || !isFinite(max) || max <= 0) return undefined
+    return winnerId
   }
 
   const checkMatchWinner = (): PlayerId | undefined => {

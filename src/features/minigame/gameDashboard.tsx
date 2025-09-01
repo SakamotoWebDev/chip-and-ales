@@ -37,6 +37,42 @@ export default function GameDashboard() {
   const [lastRound, setLastRound] = useState<RoundRecord | null>(null)
   const [matchWinnerId, setMatchWinnerId] = useState<PlayerId | undefined>(undefined)
 
+    // From ChippingController → proceed to Putting
+  const handleChippingComplete = (args: { roundId: string; closestWinnerId?: PlayerId }) => {
+    setPendingRoundId(args.roundId)
+    setClosestWinnerId(args.closestWinnerId)
+    setPhase('putting')
+  }
+
+  // From PuttingController → finalize round; maybe end match
+  const handleRoundComplete = (args: { round: RoundRecord; matchWinnerId?: PlayerId }) => {
+    setLastRound(args.round)
+    if (args.matchWinnerId) {
+      setMatchWinnerId(args.matchWinnerId)
+      setPhase('result')
+      return
+    }
+    setPhase('endRound')
+  }
+
+  // Active scoring UI (shown in sticky bottom panel during chipping/putting)
+  const scoringUI = matchInProgress && (phase === 'chipping' || phase === 'putting')
+    ? (
+        phase === 'putting' ? (
+          <PuttingController
+            roundId={pendingRoundId}
+            closestWinnerId={closestWinnerId}
+            onRoundComplete={handleRoundComplete}
+          />
+        ) : (
+          <ChippingController
+            startLocation={startLocation}
+            onComplete={({ roundId, closestWinnerId }) => handleChippingComplete({ roundId, closestWinnerId })}
+          />
+        )
+      )
+    : null
+
   const lastRoundWinnerName = useMemo(() => {
     if (!lastRound?.winnerId) return undefined
     const p = players.find(pp => pp.playerId === lastRound.winnerId)
@@ -47,7 +83,7 @@ export default function GameDashboard() {
 
   const handleStartMatch = () => {
     if (!canStart) {
-      alert('Need 2–6 players before starting.')
+      alert('Need 2–4 players before starting.')
       return
     }
     initializeScores(players.map(p => p.playerId))
@@ -65,24 +101,6 @@ export default function GameDashboard() {
     setPendingRoundId('')
     setLastRound(null)
     setMatchWinnerId(undefined)
-  }
-
-  // From ChippingController → proceed to Putting
-  const handleChippingComplete = (args: { roundId: string; closestWinnerId?: PlayerId }) => {
-    setPendingRoundId(args.roundId)
-    setClosestWinnerId(args.closestWinnerId)
-    setPhase('putting')
-  }
-
-  // From PuttingController → finalize round; maybe end match
-  const handleRoundComplete = (args: { round: RoundRecord; matchWinnerId?: PlayerId }) => {
-    setLastRound(args.round)
-    if (args.matchWinnerId) {
-      setMatchWinnerId(args.matchWinnerId)
-      setPhase('result')
-      return
-    }
-    setPhase('endRound')
   }
 
   return (
@@ -107,6 +125,8 @@ export default function GameDashboard() {
         </div>
       </div>
 
+      <div style={{ paddingBottom: 168 }}>
+
       {/* Phase router */}
       {!matchInProgress && (
         <div className="rounded-2xl border p-3 text-sm opacity-80">
@@ -126,21 +146,6 @@ export default function GameDashboard() {
 
       {matchInProgress && phase === 'orderConfirm' && (
         <PlayerOrderConfirm onConfirm={() => setPhase('chipping')} />
-      )}
-
-      {matchInProgress && phase === 'chipping' && (
-        <ChippingController
-          startLocation={startLocation}
-          onComplete={({ roundId, closestWinnerId }) => handleChippingComplete({ roundId, closestWinnerId })}
-        />
-      )}
-
-      {matchInProgress && phase === 'putting' && (
-        <PuttingController
-          roundId={pendingRoundId}
-          closestWinnerId={closestWinnerId}
-          onRoundComplete={handleRoundComplete}
-        />
       )}
 
       {matchInProgress && phase === 'endRound' && lastRound && (
@@ -175,7 +180,7 @@ export default function GameDashboard() {
 
       {/* Quick scoreboard */}
       {matchInProgress && (
-        <div className="rounded-2xl border p-3">
+        <div className="rounded-2xl border p-3 max-w-3xl mx-auto">
           <div className="mb-2 text-sm font-semibold">Scoreboard</div>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {scores.map((s: { playerId: Key | null | undefined; total: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined }) => {
@@ -187,6 +192,21 @@ export default function GameDashboard() {
                 </div>
               )
             })}
+          </div>
+        </div>
+      )}
+      </div>
+      {matchInProgress && scoringUI && (
+        <div
+          style={{
+            position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 50,
+            borderTop: '1px solid var(--border, #e5e7eb)',
+            background: 'var(--panel-bg, rgba(255,255,255,0.9))',
+            backdropFilter: 'saturate(160%) blur(8px)'
+          }}
+        >
+          <div className="max-w-5xl mx-auto p-3">
+            {scoringUI}
           </div>
         </div>
       )}

@@ -141,3 +141,43 @@ textarea:focus-visible{
 
 /* Misc utilities used */
 .emphasis{ font-weight:600; }
+
+/* Game page layout */
+.game-page {
+  position: relative;
+  min-height: 100%;
+}
+
+.game-content {
+  /* Ensure content isn't obscured by the sticky bottom panel (height + a little gap) */
+  padding-bottom: 160px;
+}
+
+/* Center container for the scoreboard */
+.game-center {
+  max-width: 960px;      /* tweak if you prefer tighter/wider */
+  margin: 0 auto;        /* centers */
+  padding: 0 16px;       /* breathing room on small screens */
+}
+
+/* Sticky/fixed bottom action panel */
+.game-bottom-panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+
+  /* Visuals match your existing style (rounded, bordered, modern) */
+  border-top: 1px solid var(--border, #e5e7eb);
+  background: var(--panel-bg, rgba(255,255,255,0.9));
+  backdrop-filter: saturate(160%) blur(8px);
+
+  padding: 12px 16px;
+}
+
+/* If you want a nice inner container width for the bottom panel: */
+.game-bottom-panel > * {
+  max-width: 960px;
+  margin: 0 auto;
+}

@@ -9,7 +9,7 @@ export default function EndRoundSummary({ round, onNextRound }: { round: RoundRe
   const winnerName = useMemo(() => players.find(p => p.playerId === round.winnerId)?.name, [players, round.winnerId])
 
   return (
-    <div className="rounded-2xl border p-3 sm:p-4">
+    <div className="rounded-2xl border p-3 sm:p-4 ">
       <div className="mb-2 text-lg font-semibold">Round Complete</div>
 
       <div className="mb-2 text-sm opacity-80">Start: {round.startLocation}</div>
@@ -32,13 +32,13 @@ export default function EndRoundSummary({ round, onNextRound }: { round: RoundRe
       <div className="mb-3 text-sm">
         Round winner: <b>{winnerName ?? '—'}</b>
       </div>
-
-      <button
-        className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
-        onClick={onNextRound}
-      >
-        Next Round
-      </button>
+      <div style={{ display: 'flex' , justifyContent: 'flex-end' }}>
+        <button
+          className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
+          onClick={onNextRound} >
+          Next Round
+          </button>
+      </div>
     </div>
   )
 }

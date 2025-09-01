@@ -8,6 +8,7 @@ import PuttingController from '../putting/puttingController'
 import EndRoundSummary from './endRoundSummary'
 import GameResult from './gameResult'
 import { PlayerId, RoundRecord } from '../../types/domain'
+import { NavLink } from 'react-router-dom'
 
  type Phase =
   | 'idle'
@@ -107,7 +108,7 @@ export default function GameDashboard() {
     <div className="space-y-4">
       <div className="flex items-center justify-between rounded-2xl border p-3">
         <div>
-          <div className="text-lg font-semibold">Chip N Dales — Match Dashboard</div>
+          <div className="text-lg font-semibold">Match Dashboard</div>
           <div className="text-sm opacity-80">
             {matchInProgress ? `Round ${currentRound}` : 'No active match'} · Players: {players.length}
           </div>
@@ -127,10 +128,38 @@ export default function GameDashboard() {
 
       <div style={{ paddingBottom: 168 }}>
 
+      {/* Quick scoreboard */}
+      {matchInProgress && (
+        <div className="rounded-2xl border p-3 max-w-3xl mx-auto">
+          <div className="mb-2 text-sm font-semibold">Scoreboard</div>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {scores.map((s: { playerId: Key | null | undefined; total: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined }) => {
+              const p = players.find(pl => pl.playerId === s.playerId)
+              return (
+                <div key={s.playerId} className="flex items-center justify-between rounded-xl border p-2">
+                  <div className="font-medium">{p?.name ?? 'Unknown'}</div>
+                  <div className="text-lg tabular-nums">{s.total}</div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+      </div>
+      {matchInProgress && scoringUI && (
+        <div className="bottom_panel">
+          <div className="max-w-5xl mx-auto p-3">
+            {scoringUI}
+          </div>
+        </div>
+      )}
+
+   
       {/* Phase router */}
-      {!matchInProgress && (
+      <div className="bottom_panel">
+        {!matchInProgress && (
         <div className="rounded-2xl border p-3 text-sm opacity-80">
-          Add players (2–6) in setup, then click <em>Start Match</em>.
+          Add players (2–4) in setup, then click <em>Start Match</em>.
         </div>
       )}
 
@@ -177,39 +206,7 @@ export default function GameDashboard() {
           }}
         />
       )}
-
-      {/* Quick scoreboard */}
-      {matchInProgress && (
-        <div className="rounded-2xl border p-3 max-w-3xl mx-auto">
-          <div className="mb-2 text-sm font-semibold">Scoreboard</div>
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            {scores.map((s: { playerId: Key | null | undefined; total: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined }) => {
-              const p = players.find(pl => pl.playerId === s.playerId)
-              return (
-                <div key={s.playerId} className="flex items-center justify-between rounded-xl border p-2">
-                  <div className="font-medium">{p?.name ?? 'Unknown'}</div>
-                  <div className="text-lg tabular-nums">{s.total}</div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      )}
-      </div>
-      {matchInProgress && scoringUI && (
-        <div
-          style={{
-            position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 50,
-            borderTop: '1px solid var(--border, #e5e7eb)',
-            background: 'var(--panel-bg, rgba(255,255,255,0.9))',
-            backdropFilter: 'saturate(160%) blur(8px)'
-          }}
-        >
-          <div className="max-w-5xl mx-auto p-3">
-            {scoringUI}
-          </div>
-        </div>
-      )}
+    </div>
     </div>
   )
 }

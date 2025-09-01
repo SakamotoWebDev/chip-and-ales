@@ -23,7 +23,8 @@ export default function StartLocationPicker({ previousWinnerName, onConfirm }: P
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      <div className="mt-3 flex gap-2">
+      <div className="mt-3 flex gap-2"
+            style={{ display: 'flex' , justifyContent: 'flex-end' }}>
         <button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
           onClick={() => onConfirm(value.trim() || 'unspecified')}

@@ -24,11 +24,12 @@ export default function App() {
       <BrowserRouter>
         <div className="p-4 space-y-3">
           <header className="flex items-center justify-between rounded-2xl border p-3">
-            <div className="text-lg font-semibold">Chip and Ales</div>
+            <div className="text-lg font-semibold flex justify-center">Chip and Ales</div>
             <nav className="flex items-center gap-2">
               <NavItem to="/">Home</NavItem>
               <NavItem to="/game">Game</NavItem>
               <NavItem to="/summary">Summary</NavItem>
+              <NavItem to="/history">History</NavItem>
             </nav>
           </header>
 

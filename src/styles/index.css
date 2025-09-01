@@ -161,7 +161,7 @@ textarea:focus-visible{
 }
 
 /* Sticky/fixed bottom action panel */
-.game-bottom-panel {
+.bottom-panel {
   position: fixed;
   left: 0;
   right: 0;
@@ -177,7 +177,8 @@ textarea:focus-visible{
 }
 
 /* If you want a nice inner container width for the bottom panel: */
-.game-bottom-panel > * {
+.bottom-panel > * {
   max-width: 960px;
   margin: 0 auto;
+  padding: 12px 16px;
 }

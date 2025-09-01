@@ -96,10 +96,12 @@ export default function MatchSummaryPage() {
                   <div className="mt-2 rounded-xl border p-2">
                     <div className="text-sm font-semibold mb-1">Putting</div>
                     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                      {putts.map((p) => (
+                      {putts.map((p: any, i: number) => (
                         <div key={r.roundId + p.playerId} className="flex items-center justify-between rounded-lg border p-2">
-                          <div>{playerName(p.playerId)}</div>
-                          <div className="text-sm">{p.made ? 'Made (+2)' : 'Miss'}</div>
+                          <span className="font-medium">{playerName(p.playerId)}</span>
+                          <span className="text-sm">
+                            {p.made ? <span className="rounded-md border px-2 py-0.5"> Made (+2)</span> : 'Missed'}
+                            </span>
                         </div>
                       ))}
                     </div>

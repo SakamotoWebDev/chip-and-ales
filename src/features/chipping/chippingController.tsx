@@ -112,7 +112,7 @@ export default function ChippingController({ startLocation, onComplete }: Props)
 
   return (
     <div className="rounded-2xl border p-3 sm:p-4">
-      <div className="mb-2 text-lg font-semibold">Chipping — Round Setup</div>
+      <div className="mb-2 text-lg font-semibold">Chipping — Shot Entry</div>
       <div className="text-sm opacity-80 mb-3">
         Turn order: {turnOrder.map(id => players.find(p => p.playerId === id)?.name).filter(Boolean).join(' → ')}
       </div>
@@ -151,7 +151,7 @@ export default function ChippingController({ startLocation, onComplete }: Props)
               </button>
 
               {/* Judge-style closest selection (only meaningful if no hole-out) */}
-              <label className="ml-2 flex items-center gap-1 text-sm">
+              <label className="ml-2 flex items-center gap-1 text-md">
                 <input
                   type="radio"
                   name="closest"
@@ -166,23 +166,23 @@ export default function ChippingController({ startLocation, onComplete }: Props)
         })}
       </div>
 
-      <div className="mt-3 flex gap-2">
+      <div 
+      className="mt-3"
+      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
         <button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
-          onClick={handleCompleteChipping}
-        >
-          Continue to Putting
-        </button>
-
-        <button
-          className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
-          onClick={resetAllChips}
-        >
-          Reset chips
-        </button>
+          onClick={resetAllChips} >
+          Reset Shot Entry
+          </button>
+        
+          <button
+            className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
+            onClick={handleCompleteChipping} >
+            Continue to Putting
+          </button>   
       </div>
 
-      <div className="mt-2 text-xs opacity-70">
+      <div className="mt-2 text-sm opacity-70">
         Tip: If anyone holed out, you don’t need to select a closest winner (they’ll auto-score +4 and skip the putt).
       </div>
     </div>

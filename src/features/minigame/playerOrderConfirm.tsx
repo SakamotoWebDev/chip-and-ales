@@ -20,7 +20,8 @@ export default function PlayerOrderConfirm({ onConfirm }: { onConfirm: () => voi
           return <li key={pid}>{p?.name ?? pid}</li>
         })}
       </ol>
-      <div className="mt-3">
+      <div className="mt-3"
+            style={{ display: 'flex' , justifyContent: 'flex-end' }}>
         <button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
           onClick={onConfirm}

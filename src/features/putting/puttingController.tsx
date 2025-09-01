@@ -165,7 +165,8 @@ export default function PuttingController({ roundId, closestWinnerId, onRoundCom
 
   return (
     <div className="rounded-2xl border p-3 sm:p-4">
-      <div className="mb-2 text-lg font-semibold">Putting — One attempt each</div>
+      <div className="mb-2 text-lg font-semibold">Putting — Shot Entry</div>
+      <div className="rounded-border p-3 sm:p-2">One attempt each</div>
 
       {useShotTimer && (
         <div className="mb-2 text-sm opacity-80">
@@ -202,18 +203,20 @@ export default function PuttingController({ roundId, closestWinnerId, onRoundCom
         )}
       </div>
 
-      <div className="mt-3 flex gap-2">
-        <button
-          className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
-          onClick={handleFinalizeRound}
-        >
-          Finalize Round
-        </button>
+      <div 
+      className="mt-3"
+      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
         <button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
           onClick={fakeStartIfNeeded}
         >
           Ensure Match Started
+        </button>
+        <button
+          className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
+          onClick={handleFinalizeRound}
+        >
+          Finalize Round
         </button>
       </div>
     </div>

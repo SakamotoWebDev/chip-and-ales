@@ -41,7 +41,7 @@ export default function MatchSetup({ onStartMatch }: Props) {
         </Button>
       }>
         <div className="text-sm opacity-80">
-          Players added: <b>{players.length}</b> · {canStart ? 'Ready to play.' : 'Need 2–6 players.'}
+          Players added: <b>{players.length}</b> · {canStart ? 'Ready to play.' : 'Need 2–4 players.'}
         </div>
       </Card>
     </div>

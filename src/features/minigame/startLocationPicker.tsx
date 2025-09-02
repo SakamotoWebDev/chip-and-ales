@@ -1,5 +1,6 @@
 // /src/features/minigame/startLocationPicker.tsx
 import { useState } from 'react'
+import Button from '@/components/common/button'
 
 type Props = {
   previousWinnerName?: string
@@ -25,12 +26,11 @@ export default function StartLocationPicker({ previousWinnerName, onConfirm }: P
       />
       <div className="mt-3 flex gap-2"
             style={{ display: 'flex' , justifyContent: 'flex-end' }}>
-        <button
-          className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
+        <Button
           onClick={() => onConfirm(value.trim() || 'unspecified')}
         >
           Confirm & Continue
-        </button>
+        </Button>
       </div>
     </div>
   )

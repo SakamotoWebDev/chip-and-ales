@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react'
-import { useRootStore } from '../../store/createStore'
-import { ChipResult, PlayerId, RoundRecord } from '../../types/domain'
-import { GameEventType } from '../../types/events'
-import { getTurnOrder } from '../../lib/orderEngine'
-import { generateId } from '../../lib/id'
+import { useRootStore } from '@/store/createStore'
+import { ChipResult, PlayerId, RoundRecord } from '@/types/domain'
+import { GameEventType } from '@/types/events'
+import { getTurnOrder } from '@/lib/orderEngine'
+import { generateId } from '@/lib/id'
+import Button from '@/components/common/button'
 
 type Props = {
   startLocation: string
@@ -136,19 +137,19 @@ export default function ChippingController({ startLocation, onComplete }: Props)
                 }
               />
 
-              <button
+              <Button
                 className="rounded-lg border px-3 py-1 hover:opacity-80 active:scale-[0.98]"
                 onClick={() => onAddChip(pid)}
               >
                 Add chip
-              </button>
+              </Button>
 
-              <button
+              <Button
                 className="rounded-lg border px-3 py-1 hover:opacity-80 active:scale-[0.98]"
                 onClick={() => onHoleOut(pid)}
               >
                 Hole-out
-              </button>
+              </Button>
 
               {/* Judge-style closest selection (only meaningful if no hole-out) */}
               <label className="ml-2 flex items-center gap-1 text-md">
@@ -169,17 +170,17 @@ export default function ChippingController({ startLocation, onComplete }: Props)
       <div 
       className="mt-3"
       style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-        <button
+        <Button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
           onClick={resetAllChips} >
           Reset Shot Entry
-          </button>
+          </Button>
         
-          <button
+          <Button
             className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
             onClick={handleCompleteChipping} >
             Continue to Putting
-          </button>   
+          </Button>   
       </div>
 
       <div className="mt-2 text-sm opacity-70">

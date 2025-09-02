@@ -5,6 +5,7 @@ import type { RootState } from '@/store/createStore'
 import { generateId } from '@/lib/id'
 import { Player } from '@/types/domain'
 import PlayerSetup from '@/features/setup/playerSetup'
+import Button from '@/components/common/button'
 
 export default function HomePage() {
   const navigate = useNavigate()
@@ -49,13 +50,7 @@ export default function HomePage() {
           <div className="text-sm opacity-80">Score tracker for the two-part mini game.</div>
           <div className="text-sm opacity-80">Complete Player registration and rule setup here before Starting Match.</div>
         </div>
-        <button
-          className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
-          disabled={!canStart}
-          onClick={() => navigate('/game')}
-        >
-          Start Match
-        </button>
+        <Button disabled={!canStart} tone="primary" onClick={()=> navigate('/game')}>Start Match</Button>
       </header>
 
       {/* Rules / Options */}
@@ -113,13 +108,13 @@ export default function HomePage() {
       <PlayerSetup showHandicap={useHandicap} />
      
       <footer className="flex justify-end">
-        <button
-          className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
-          disabled={!canStart}
-          onClick={() => navigate('/game')}
+ {/*       <Button 
+        disabled={!canStart} tone="primary" 
+        onClick={()=> navigate('/game')}
         >
           Start Match
-        </button>
+          </Button>
+          */}
       </footer>
     </div>
   )

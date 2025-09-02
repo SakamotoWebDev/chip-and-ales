@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import HomePage from '../pages/homePage'
 import GamePage from '../pages/gamePage'
 import MatchSummaryPage from '../pages/matchSummaryPage'
-import HistoryPage from '../pages/historyPage'
 
 function DebugPage() {
   return (
@@ -12,7 +11,6 @@ function DebugPage() {
         <a className="emphasis" href="/">/</a>, 
         <a className="emphasis" href="/game">/game</a>,
         <a className="emphasis" href="/summary">/summary</a>,
-        <a className="emphasis" href="/history">/history</a>
          </div>
     </div>
   )

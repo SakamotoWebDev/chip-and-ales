@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react'
-import { useRootStore } from '../../store/createStore'
-import type { PlayerId, ScoreDelta, RoundRecord } from '../../types/domain'
-import { GameEventType } from '../../types/events'
-import { formatTime } from '../../lib/time'
-import { generateId } from '../../lib/id'
+import { useRootStore } from '@/store/createStore'
+import type { PlayerId, ScoreDelta, RoundRecord } from '@/types/domain'
+import { GameEventType } from '@/types/events'
+import { formatTime } from '@/lib/time'
+import Button from '@/components/common/button'
 
 type Props = {
   roundId: string
@@ -100,19 +100,20 @@ export default function PuttingController({ roundId, closestWinnerId, onRoundCom
     return winnerId
   }
 
-  const checkMatchWinner = (): PlayerId | undefined => {
-    if (!scores.length) return undefined
-    const sorted = [...scores].sort((a, b) => b.total - a.total)
-    const top = sorted[0]
-    const runnerUp = sorted[1]
-    if (!top) return undefined
+// Read fresh store state AFTER applyDeltas runs to avoid stale scores
+const checkMatchWinner = (): PlayerId | undefined => {
+  const currentScores = useRootStore.getState().scores
+  if (!currentScores || currentScores.length === 0) return undefined
 
-    const topScore = top.total
-    const diff = (runnerUp ? top.total - runnerUp.total : top.total)
+  const sorted = [...currentScores].sort((a, b) => b.total - a.total)
+  const top = sorted[0]
+  const runnerUp = sorted[1]
 
-    if (topScore >= 7 && diff >= 2) return top.playerId
-    return undefined
-  }
+  if (!top) return undefined
+  const lead = top.total - (runnerUp?.total ?? 0)
+
+  return (top.total >= 7 && lead >= 2) ? (top.playerId as PlayerId) : undefined
+}
 
   const handleFinalizeRound = () => {
     // Require at least an explicit closest if no hole-out
@@ -157,12 +158,11 @@ export default function PuttingController({ roundId, closestWinnerId, onRoundCom
     incrementRound()
     onRoundComplete({ round })
   }
-
-  const fakeStartIfNeeded = () => {
+{/*  const fakeStartIfNeeded = () => {
     // Optional helper to guarantee match state is active
     startMatch()
   }
-
+*/}
   return (
     <div className="rounded-2xl border p-3 sm:p-4">
       <div className="mb-2 text-lg font-semibold">Putting — Shot Entry</div>
@@ -180,18 +180,16 @@ export default function PuttingController({ roundId, closestWinnerId, onRoundCom
             <div className="min-w-24 font-medium">{p.name}</div>
 
             <div className="ml-auto flex gap-2">
-              <button
+              <Button
                 className={`rounded-lg border px-3 py-1 hover:opacity-80 active:scale-[0.98] ${localMade[p.playerId] === false ? 'opacity-90' : ''}`}
-                onClick={() => savePutt(p.playerId, false)}
-              >
-                Miss
-              </button>
-              <button
+                onClick={() => savePutt(p.playerId, false)}>
+                  Miss
+                </Button>
+              <Button
                 className={`rounded-lg border px-3 py-1 hover:opacity-80 active:scale-[0.98] ${localMade[p.playerId] === true ? 'opacity-90' : ''}`}
-                onClick={() => savePutt(p.playerId, true)}
-              >
-                Made (+2)
-              </button>
+                onClick={() => savePutt(p.playerId, true)}>
+                  Made (+2)
+                </Button>
             </div>
           </div>
         ))}
@@ -205,19 +203,16 @@ export default function PuttingController({ roundId, closestWinnerId, onRoundCom
 
       <div 
       className="mt-3"
-      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-        <button
-          className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
-          onClick={fakeStartIfNeeded}
-        >
-          Ensure Match Started
-        </button>
-        <button
-          className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
-          onClick={handleFinalizeRound}
-        >
-          Finalize Round
-        </button>
+      style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 8 }}>
+{/*        <Button 
+          onClick={fakeStartIfNeeded}>
+            Ensure Match Started
+          </Button>
+*/}
+          <Button 
+            onClick={handleFinalizeRound}>
+              Finalize Round
+            </Button>
       </div>
     </div>
   )

@@ -9,6 +9,7 @@ import EndRoundSummary from './endRoundSummary'
 import GameResult from './gameResult'
 import { PlayerId, RoundRecord } from '../../types/domain'
 import { NavLink } from 'react-router-dom'
+import Button from '@/components/common/button'
 
  type Phase =
   | 'idle'
@@ -88,7 +89,7 @@ export default function GameDashboard() {
       return
     }
     initializeScores(players.map(p => p.playerId))
-    startMatch()
+    startMatch() 
     setPhase('startLocation')
   }
 
@@ -115,13 +116,13 @@ export default function GameDashboard() {
         </div>
         <div className="flex gap-2">
           {!matchInProgress ? (
-            <button className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]" onClick={handleStartMatch}>
+            <Button className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]" onClick={handleStartMatch}>
               Start Match
-            </button>
+            </Button>
           ) : (
-            <button className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]" onClick={handleCancelMatch}>
+            <Button className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]" onClick={handleCancelMatch}>
               End Match
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -159,7 +160,7 @@ export default function GameDashboard() {
       <div className="bottom_panel">
         {!matchInProgress && (
         <div className="rounded-2xl border p-3 text-sm opacity-80">
-          Add players (2–4) in setup, then click <em>Start Match</em>.
+{/*}          Add players (2–4) in setup, then click <em>Start Match</em>. */}
         </div>
       )}
 

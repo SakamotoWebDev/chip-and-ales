@@ -2,6 +2,7 @@
 import { useMemo } from 'react'
 import { useRootStore } from '../../store/createStore'
 import { getTurnOrder } from '../../lib/orderEngine'
+import Button from '@/components/common/button'
 
 export default function PlayerOrderConfirm({ onConfirm }: { onConfirm: () => void }) {
   const players = useRootStore(s => s.players)
@@ -22,12 +23,12 @@ export default function PlayerOrderConfirm({ onConfirm }: { onConfirm: () => voi
       </ol>
       <div className="mt-3"
             style={{ display: 'flex' , justifyContent: 'flex-end' }}>
-        <button
+        <Button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
           onClick={onConfirm}
         >
           Looks good — Start Chipping
-        </button>
+        </Button>
       </div>
     </div>
   )

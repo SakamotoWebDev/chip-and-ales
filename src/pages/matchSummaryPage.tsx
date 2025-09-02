@@ -1,12 +1,12 @@
 import { useMemo } from 'react'
-import { useRootStore } from '../store/createStore'
-import type { MatchRecord, Player, PlayerScore, RoundRecord, ScoreDelta } from '../types/domain'
-import { exportToJSON, exportToCSV } from '../lib/export'
-import { generateId } from '../lib/id'
-import Card from '../components/common/card'
-import Button from '../components/common/button'
-import ScorePill from '../components/common/scorePill'
-import ChipBadge from '../components/common/chipBadge'
+import { useRootStore } from '@/store/createStore'
+import type { MatchRecord, Player, PlayerScore, RoundRecord, ScoreDelta } from '@/types/domain'
+import { exportToJSON, exportToCSV } from '@/lib/export'
+import { generateId } from '@/lib/id'
+import Card from '@/components/common/card'
+import Button from '@/components/common/button'
+import ScorePill from '@/components/common/scorePill'
+import ChipBadge from '@/components/common/chipBadge'
 
 export default function MatchSummaryPage() {
   const players = useRootStore(s => s.players)

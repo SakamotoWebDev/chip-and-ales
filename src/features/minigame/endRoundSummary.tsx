@@ -2,6 +2,7 @@
 import { useMemo } from 'react'
 import { useRootStore } from '../../store/createStore'
 import { RoundRecord } from '../../types/domain'
+import Button from '@/components/common/button';
 
 export default function EndRoundSummary({ round, onNextRound }: { round: RoundRecord; onNextRound: () => void }) {
   const players = useRootStore(s => s.players)
@@ -33,11 +34,11 @@ export default function EndRoundSummary({ round, onNextRound }: { round: RoundRe
         Round winner: <b>{winnerName ?? '—'}</b>
       </div>
       <div style={{ display: 'flex' , justifyContent: 'flex-end' }}>
-        <button
+        <Button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
           onClick={onNextRound} >
           Next Round
-          </button>
+          </Button>
       </div>
     </div>
   )

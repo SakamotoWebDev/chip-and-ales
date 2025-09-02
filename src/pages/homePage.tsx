@@ -83,8 +83,8 @@ export default function HomePage() {
 
         <details className="rounded-xl border p-3">
           <summary className="cursor-pointer font-medium">How the game works</summary>
-          <ul className="mt-2 list-disc pl-5 text-md"
-              style={{ display: 'flex', flexDirection: 'column', gap: 36 }} // px
+          <div className="mt-2 list-disc pl-5 text-md"
+              style={{ display: 'flex', flexDirection: 'column', gap: 36 }}
               >
             <div>
               <li>Each Round has two parts: Chipping then Putting.</li>
@@ -101,7 +101,7 @@ export default function HomePage() {
               <li>Chipping Order is always highest score → lowest score.</li>
               <li>Putting Order is Farthest → Closest.</li>
               </div>
-          </ul>
+          </div>
         </details>
       </section>
 

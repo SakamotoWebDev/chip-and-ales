@@ -32,21 +32,26 @@ export default function PlayerSetup({ showHandicap = false }: Props) {
   return (
     <Card title="Players" subtitle="Add 2–4 players. Matching ball colors will help during gameplay.">
       <div className="space-y-3">
-        <div className="flex flex-col gap-2 sm:flex-row">
+        <div className="flex flex-row gap-2 sm:flex-row w-full">
           <input
-            className="rounded-md border px-3 py-2 w-full"
-            placeholder="Player name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            className="rounded-md border py-20 w-28"
+            className="color-circle"
             type="color"
             value={color}
             onChange={(e) => setColor(e.target.value)}
             title="Player color"
+            
+            style={{ width: 48, height: 48 }}
           />
-          <Button tone="primary" onClick={onAdd}>
+          <input
+            className="rounded-md border px-3 py-2 w-flex"
+            placeholder="Player name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Button 
+          tone="primary"
+          className='ml-auto' 
+          onClick={onAdd}>
             Add
             </Button>
         </div>
@@ -54,24 +59,22 @@ export default function PlayerSetup({ showHandicap = false }: Props) {
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {players.map(p => (
             <div key={p.playerId} className="flex items-center justify-between rounded-md border p-2">
-              <div className="flex items-center gap-2">
-                <span aria-hidden 
-                    style={{ width: 20, height: 20, borderRadius: 9999, background: p.color }} />
+              <div className="flex items-center gap-2 w-full">
                 <input
-                  className="rounded-md border px-0.5 py-0.5"
-                  value={p.name}
-                  onChange={(e) => updatePlayer({ ...p, name: e.target.value })}
-                />
-              </div>
-
-              <div className="flex items-center gap-1">
-                <input
-                  className="rounded-md border px-0 py-0 w-18"
+                  className="color-circle"
                   type="color"
                   value={p.color}
                   onChange={(e) => updatePlayer({ ...p, color: e.target.value })}
                   title="Color"
+                  style={{ width: 32, height: 32 }}
                 />
+                <input
+                  className="rounded-md border px-0.5 py-0.5 w-third"
+                  value={p.name}
+                  onChange={(e) => updatePlayer({ ...p, name: e.target.value })}
+                />
+
+              
                 {showHandicap && (
                   <div className="flex items-center gap-1">
                     <span className="text-xs opacity-70">HCP</span>
@@ -82,11 +85,19 @@ export default function PlayerSetup({ showHandicap = false }: Props) {
                       min={-10}
                       max={10}
                       step={1}
-                      style={{ width: 72 }}
+                      style={{ width: 64 }}
                     />
                   </div>
                 )}
-                <Button variant="outline" onClick={() => removePlayer(p.playerId)}>Remove</Button>
+                <Button
+                variant='outline'
+                weight="xlg"
+                tone= "danger"
+                className= "ml-auto"
+                onClick={() => removePlayer(p.playerId)}
+                >
+                  X
+                  </Button>
               </div>
             </div>
           ))}
@@ -95,7 +106,12 @@ export default function PlayerSetup({ showHandicap = false }: Props) {
         {players.length > 0 && (
           <div className="pt-2"
                 style={{ display: 'flex' , justifyContent: 'flex-end' }}>
-            <Button variant="outline" onClick={resetPlayers}>Clear Players</Button>
+            <Button 
+            variant="outline" 
+            onClick={resetPlayers}
+            >
+              Clear Players
+              </Button>
           </div>
         )}
       </div>

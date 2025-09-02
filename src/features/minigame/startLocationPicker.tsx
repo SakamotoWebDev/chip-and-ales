@@ -27,6 +27,10 @@ export default function StartLocationPicker({ previousWinnerName, onConfirm }: P
       <div className="mt-3 flex gap-2"
             style={{ display: 'flex' , justifyContent: 'flex-end' }}>
         <Button
+          variant='solid'
+          tone='primary'
+          size='md'
+          weight='md'
           onClick={() => onConfirm(value.trim() || 'unspecified')}
         >
           Confirm & Continue

@@ -25,6 +25,10 @@ export default function PlayerOrderConfirm({ onConfirm }: { onConfirm: () => voi
             style={{ display: 'flex' , justifyContent: 'flex-end' }}>
         <Button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
+          variant='solid'
+          tone='primary'
+          size='md'
+          weight='md'
           onClick={onConfirm}
         >
           Looks good — Start Chipping

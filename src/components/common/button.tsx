@@ -4,11 +4,13 @@ import { ButtonHTMLAttributes, ReactNode } from 'react'
 type ButtonVariant = 'solid' | 'outline' | 'ghost'
 type ButtonTone = 'neutral' | 'primary' | 'success' | 'danger'
 type ButtonSize = 'sm' | 'md' | 'lg'
+type ButtonFont = 'xsm' | 'sm' | 'md' | 'lg' | 'xlg'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant
   tone?: ButtonTone
   size?: ButtonSize
+  weight?: ButtonFont
   fullWidth?: boolean
   loading?: boolean
   iconLeft?: ReactNode
@@ -28,10 +30,19 @@ const sizePad: Record<ButtonSize, { px: number; py: number; fs: number; br: numb
   lg: { px: 18, py: 12, fs: 16, br: 14 },
 }
 
+const fontWeights: Record<ButtonFont, number> = {
+  xsm: 300,
+  sm: 500,
+  md: 700,
+  lg: 900,
+  xlg: 1100,
+}
+
 export default function Button({
   variant = 'solid',
-  tone = 'neutral',
+  tone = 'primary',
   size = 'md',
+  weight = 'md',
   fullWidth,
   loading,
   iconLeft,
@@ -43,6 +54,7 @@ export default function Button({
 }: ButtonProps) {
   const c = toneColors[tone]
   const s = sizePad[size]
+  const fw = fontWeights[weight]
 
   const baseStyle: React.CSSProperties = {
     display: 'inline-flex',
@@ -51,6 +63,7 @@ export default function Button({
     gap: 8,
     padding: `${s.py}px ${s.px}px`,
     fontSize: s.fs,
+    fontWeight: fw,
     borderRadius: s.br,
     borderWidth: 1,
     borderStyle: 'solid',

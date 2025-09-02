@@ -25,7 +25,7 @@ function NavItem({ to, children }: { to: string; children: ReactNode }) {
 export default function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <div className="p-4 space-y-3">
           <header className="font-semibold flex items-center justify-between rounded-2xl border p-3">
             {/* Make the title itself the Home link */}

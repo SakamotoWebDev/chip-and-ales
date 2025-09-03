@@ -56,29 +56,33 @@ export default function HomePage() {
   <div className="shrink-0" />
 </header>
 
+      {/* ideal Start Button location */}
+      <section className="rounded-2xl border p-3">
+        <Button
+          className="w-full"
+          disabled={!canStart}
+          tone="primary"
+          onClick={() => {
+            if (!canStart) {
+              alert('Need 2–6 players before starting.')
+              return
+            }
+            // Prepare a fresh match session
+            resetScores()
+            resetRounds()
+            initializeScores(players.map(p => p.playerId))
+            navigate('/game')
+          }}
+        >
+          Start Match
+        </Button>
+      </section>
+
+      <PlayerSetup showHandicap={useHandicap} />
+
       {/* Rules / Options */}
       <section className="rounded-2xl border p-3 space-y-4">
-        <div className="text-lg font-semibold">Options</div>
-        <div className="flex items-center gap-3">
-          <label className="flex items-center gap-2">
-            <input type="checkbox" checked={useHandicap} onChange={toggleHandicap} />Use handicap</label>
-          <label className="flex items-center gap-2">
-            <input type="checkbox" checked={useShotTimer} onChange={toggleShotTimer} />Shot timer</label>
-          {useShotTimer && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm opacity-80">Seconds:</span>
-              <input
-                className="w-24 rounded-md border px-2 py-1"
-                type="number"
-                min={5}
-                max={120}
-                step={5}
-                value={shotClock}
-                onChange={e => setShotClock(Math.max(5, Math.min(120, Number(e.target.value) || 0)))}
-              />
-            </div>
-          )}
-        </div>
+        <div className="text-lg font-semibold">Rules and Options</div>
 
         <details className="rounded-xl border p-3">
           <summary className="cursor-pointer font-medium">How the game works</summary>
@@ -102,30 +106,28 @@ export default function HomePage() {
               </div>
           </div>
         </details>
-      </section>
 
-      <PlayerSetup showHandicap={useHandicap} />
-     
-      <footer className="max-w-4xl mx-auto space-y-10 p-4">
-        <Button
-          className= "w-full"
-          disabled={!canStart}
-          tone="primary"
-          onClick={() => {
-            if (!canStart) {
-              alert('Need 2–6 players before starting.')
-              return
-            }
-            // Prepare a fresh match session
-            resetScores()
-            resetRounds()
-            initializeScores(players.map(p => p.playerId))
-            navigate('/game')
-          }}
-        >
-          Start Match
-        </Button>
-      </footer>
+        <div className="flex items-center gap-3">
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={useHandicap} onChange={toggleHandicap} />Use handicap</label>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={useShotTimer} onChange={toggleShotTimer} />Shot timer</label>
+          {useShotTimer && (
+            <div className="flex items-center gap-2">
+              <span className="text-sm opacity-80">Seconds:</span>
+              <input
+                className="w-24 rounded-md border px-2 py-1"
+                type="number"
+                min={5}
+                max={120}
+                step={5}
+                value={shotClock}
+                onChange={e => setShotClock(Math.max(5, Math.min(120, Number(e.target.value) || 0)))}
+              />
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   )
 }

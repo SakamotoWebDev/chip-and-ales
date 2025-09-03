@@ -134,6 +134,24 @@ export default function ChippingController({ startLocation, onComplete }: Props)
             <div key={pid} className="flex flex-wrap items-center gap-2 rounded-xl border p-2">
               <div className="font-medium" style={{ minWidth: 96, flexShrink: 1 }}>{p.name}</div>
               
+              <Button 
+                className={`
+                  ml-2 
+                  rounded-lg border 
+                  px-3 
+                  py-2 
+                  hover:opacity-80 
+                  active:scale-[0.98] 
+                  ${isClosest ? 'btn-selected' : ''}
+                  `} 
+                style={{ flexShrink: 0 }}
+                aria-pressed={isClosest}
+                data-selected={isClosest || undefined}
+                disabled={someoneHoled}
+                onClick={() => setClosestWinnerId(pid)}
+              >  
+                {isClosest ? 'Closest!' : 'Closer?'}
+              </Button>
 
               {/* Optional numeric distance if not using judge mode */}
               <input
@@ -171,25 +189,6 @@ export default function ChippingController({ startLocation, onComplete }: Props)
                 onClick={() => onHoleOut(pid)}
               >
                 {isHoled ? 'Holed!' : 'Hole-out'}
-              </Button>
-
-              <Button 
-                className={`
-                  ml-2 
-                  rounded-lg border 
-                  px-3 
-                  py-2 
-                  hover:opacity-80 
-                  active:scale-[0.98] 
-                  ${isClosest ? 'btn-selected' : ''}
-                  `} 
-                style={{ flexShrink: 0 }}
-                aria-pressed={isClosest}
-                data-selected={isClosest || undefined}
-                disabled={someoneHoled}
-                onClick={() => setClosestWinnerId(pid)}
-              >  
-                {isClosest ? 'Closest!' : 'Closer?'}
               </Button>
             </div>
           )

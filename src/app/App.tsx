@@ -11,11 +11,12 @@ function NavItem({ to, children }: { to: string; children: ReactNode }) {
 
   return (
     <Button
-       onClick={() => navigate(to)}
+      onClick={() => navigate(to)}
       aria-current={isActive ? 'page' : undefined}
       className={`rounded-lg border px-3 py-1 hover:opacity-80 active:scale-[0.98] ${
         isActive ? 'bg-black text-white dark:bg-white dark:text-black' : ''
       }`}
+      style={{ width: 'auto', flexShrink: 0, minHeight: 40 }}
     >
       {children}
     </Button>
@@ -27,18 +28,14 @@ export default function App() {
     <ThemeProvider>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <div className="p-4 space-y-3">
-          <header className="font-semibold flex items-center justify-between rounded-2xl border p-3">
-            {/* Make the title itself the Home link */}
-            <NavItem
-              to="/"
-              aria-label="Go to Home"
-            >
+          <header className="font-semibold flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 rounded-2xl border p-3">
+            <div
+              className="px-3 mx-auto text-lg font-semibold">
               Chip and Ales
-            </NavItem>
+            </div>
 
             <nav className="flex items-center gap-3">
-              {/* Removed separate 'Home' item; the title now handles Home */}
-              <NavItem to="/">Home</NavItem>
+              <NavItem to="/home">Setup</NavItem>
               <NavItem to="/game">Game</NavItem>
               <NavItem to="/summary">Summary</NavItem>
             </nav>

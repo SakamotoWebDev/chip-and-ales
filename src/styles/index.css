@@ -102,6 +102,9 @@ img, svg, canvas, video {
   height: auto;
 }
 
+/* Media safety */
+img, svg, canvas, video { max-width: 100%; height: auto; }
+
 /* Sticky bottom controller panel (if you use it) + safe-area padding */
 .bottom_panel {
   position: sticky; /* or fixed, if you already use .fixed */
@@ -129,10 +132,59 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* Circular color inputs already set elsewhere;
    keep them from introducing horizontal scroll on wrap. */
-.color-circle { display: inline-block; }
+.color-circle {
+  -webkit-appearance: none; appearance: none;
+  border: none; padding: 0; border-radius: 9999px;
+  overflow: hidden; background: transparent; cursor: pointer; display: inline-block;
+}
+.color-circle::-webkit-color-swatch-wrapper { padding: 0; }
+.color-circle::-webkit-color-swatch { border: none; border-radius: 50%; }
+.color-circle::-moz-focus-inner { border: 0; padding: 0; }
+.color-circle::-moz-color-swatch { border: none; border-radius: 50%; }
 
 /* High-contrast active state on mobile */
 button:active, .btn:active {
+  filter: brightness(0.96);
+  transform: scale(0.99);
+  transition: transform .12s ease, filter .12s ease;
+}
+
+/* ============================================================
+   Re-usable selected/toggled button styles (mobile-friendly)
+   Apply via class `btn-selected` and optional variant class `btn-selected--danger`,
+   or via state attributes: aria-pressed="true" / data-selected="true".
+============================================================ */
+:root{
+  --btn-selected-bg: var(--primary, #488758);
+  --btn-selected-fg: #ffffff;
+  --btn-selected-border: transparent;
+  --btn-selected-danger-bg: var(--danger, #ef4444);
+}
+
+/* Generic selected state */
+button.btn-selected,
+.btn.btn-selected,
+button[aria-pressed="true"],
+.btn[aria-pressed="true"],
+[data-selected="true"] {
+  background: var(--btn-selected-bg) !important;
+  color: var(--btn-selected-fg) !important;
+  border-color: var(--btn-selected-border) !important;
+}
+
+/* Danger variant override */
+button.btn-selected.btn-selected--danger,
+.btn.btn-selected.btn-selected--danger,
+[data-selected-variant="danger"] {
+  background: var(--btn-selected-danger-bg) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+/* Keep pressed feedback snappy */
+button.btn-selected:active,
+.btn.btn-selected:active,
+[data-selected="true"]:active {
   filter: brightness(0.96);
   transform: scale(0.99);
   transition: transform .12s ease, filter .12s ease;

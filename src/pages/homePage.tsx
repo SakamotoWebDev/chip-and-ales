@@ -48,11 +48,10 @@ export default function HomePage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-10 p-4">
-      <header className="flex flex-wrap sm:flex-nowrap items-start justify-between gap-4 rounded-2xl border p-3">
+      <header className="flex flex-wrap items-start justify-between gap-4 rounded-2xl border p-3">
   <div className="flex-1 pr-6 min-w-[260px]">
-    <div className="text-xl font-semibold">Home Page</div>
-    <div className="text-sm opacity-80">Score tracker for the two-part mini game.</div>
-    <div className="text-sm opacity-80">Complete Player registration and rule setup here before Starting Match.</div>
+    <div className="text-sm opacity-90">Score tracker for a two-part golf minigame.</div>
+    <div className="text-sm opacity-80">Complete Player and Rule setup here before starting the match.</div>
   </div>
   <div className="shrink-0" />
 </header>

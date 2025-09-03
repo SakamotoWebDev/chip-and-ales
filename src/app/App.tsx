@@ -28,9 +28,9 @@ export default function App() {
     <ThemeProvider>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <div className="p-4 space-y-3">
-          <header className="font-semibold flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 rounded-2xl border p-3">
+          <header className="font-semibold flex sm:flex-row items-center justify-between gap-3 rounded-2xl border p-3">
             <div
-              className="px-3 mx-auto text-lg font-semibold">
+              className="px-2 mx-auto text-lg font-semibold">
               Chip and Ales
             </div>
 

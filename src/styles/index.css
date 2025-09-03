@@ -366,10 +366,12 @@ textarea:focus-visible{
 .text-sm{ font-size:14px; }
 .text-lg{ font-size:18px; }
 .text-xl{ font-size:20px; }
+.font-light{ font-weight:400}
 .font-medium{ font-weight:500; }
-.font-semibold{ font-weight:600; }
+.font-semibold{ font-weight:650; }
 .opacity-70{ opacity:.7; }
 .opacity-80{ opacity:.8; }
+.opacity-90{ opacity:.9; }
 .text-right{ text-align:right; }
 .list-decimal{ list-style:decimal; }
 .pl-5{ padding-left:1.25rem; }

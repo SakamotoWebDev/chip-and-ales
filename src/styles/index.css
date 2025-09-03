@@ -5,7 +5,7 @@
   --text:#111827;
   --muted:#6b7280;
   --border:#e5e7eb;
-  --ring:#2563eb;
+  --ring:#2d8f03;
 }
 .dark{
   --bg:#0b0e11;
@@ -13,7 +13,129 @@
   --text:#e5e7eb;
   --muted:#9ca3af;
   --border:#1f2937;
-  --ring:#60a5fa;
+  --ring:#37dc2e;
+}
+
+/* --- Mobile-first hardening --- */
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
+html, body {
+  overflow-x: hidden;               /* kill horizontal scroll */
+  -webkit-text-size-adjust: 100%;   /* avoid iOS font scaling surprises */
+}
+
+/* Tap targets & zoom prevention on iOS (inputs <16px cause zoom) */
+@media (max-width: 480px) {
+  input, select, textarea, button {
+    font-size: 16px;
+    min-height: 44px;               /* comfortable touch area */
+  }
+}
+
+/* Make common “rows” wrap on small screens.
+   This catches your header/toolbars/form rows without editing JSX. */
+@media (max-width: 640px) {
+  .rounded-2xl.border .flex,
+  .rounded-xl.border  .flex,
+  header .flex,
+  footer .flex {
+    flex-wrap: wrap;
+    gap: 10px;                      /* space between wrapped items */
+  }
+  /* Prevent flex children from forcing overflow */
+  .flex > * { min-width: 0; }
+}
+
+/* Inputs & buttons should not overflow their parent */
+@media (max-width: 640px) {
+  input, select, textarea, button,
+  .btn {
+    max-width: 100%;
+    width: 100%;                    /* stack full-width by default on mobile */
+    box-sizing: border-box;
+  }
+  /* Exceptions: small inline controls keep auto width */
+  input[type="color"] {
+    width: auto;
+    height: 32px;
+  }
+}
+
+/* Collapse grids to a single column on phones */
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Tighter padding on cards/sections to fit more on screen */
+@media (max-width: 480px) {
+  .p-4 { padding: 12px; }
+  .p-3 { padding: 10px; }
+  .p-2 { padding: 8px;  }
+}
+
+/* Avoid long labels/values pushing layout sideways */
+@media (max-width: 640px) {
+  .rounded-2xl.border,
+  .rounded-xl.border,
+  .card {
+    overflow-wrap: anywhere;  /* break long words/URLs */
+    word-break: break-word;
+  }
+}
+
+/* Buttons in toolbars shouldn’t shrink to weird sizes */
+@media (max-width: 640px) {
+  .shrink-0,
+  button,
+  .btn {
+    flex-shrink: 0;
+  }
+}
+
+/* Keep icons/images from overflowing */
+img, svg, canvas, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Sticky bottom controller panel (if you use it) + safe-area padding */
+.bottom_panel {
+  position: sticky; /* or fixed, if you already use .fixed */
+  bottom: 0;
+  left: 0; right: 0;
+  z-index: 50;
+  border-top: 1px solid var(--border, #e5e7eb);
+  background: var(--panel, rgba(255,255,255,.9));
+  backdrop-filter: saturate(160%) blur(8px);
+  padding-bottom: env(safe-area-inset-bottom); /* iOS notch */
+}
+.content-with-bottom { padding-bottom: 140px; } /* keep content above panel */
+@media (max-width: 480px) {
+  .content-with-bottom { padding-bottom: 120px; }
+}
+
+/* Numeric inputs (mobile polish) */
+input[type="number"] {
+  appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none; margin: 0;
+}
+
+/* Circular color inputs already set elsewhere;
+   keep them from introducing horizontal scroll on wrap. */
+.color-circle { display: inline-block; }
+
+/* High-contrast active state on mobile */
+button:active, .btn:active {
+  filter: brightness(0.96);
+  transform: scale(0.99);
+  transition: transform .12s ease, filter .12s ease;
 }
 
 *{ box-sizing:border-box; }
@@ -41,6 +163,80 @@ textarea:focus-visible{
   outline:2px solid var(--ring);
   outline-offset:2px;
 }
+
+/* Pseudo “variants” (hover:, active:, sm:, lg:) */
+[class~="hover:opacity-80"]:hover{ opacity:.8; }
+[class~="active:scale-[0.96]"]:active{ transform:scale(.98); }
+
+/* Responsive */
+@media (min-width:640px){
+  [class~="sm:p-4"]{ padding:1rem; }
+  [class~="sm:flex-row"]{ flex-direction:row; }
+  [class~="sm:grid-cols-2"]{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (min-width:1024px){
+  [class~="lg:grid-cols-3"]{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+
+/* Misc utilities used */
+.emphasis{ font-weight:600; }
+
+/* Game page layout */
+.game-page {
+  position: relative;
+  min-height: 100%;
+}
+
+.game-content {
+  /* Ensure content isn't obscured by the sticky bottom panel (height + a little gap) */
+  padding-bottom: 160px;
+}
+
+/* Center container for the scoreboard */
+.game-center {
+  max-width: 960px;      /* tweak if you prefer tighter/wider */
+  margin: 0 auto;        /* centers */
+  padding: 0 16px;       /* breathing room on small screens */
+}
+
+/* Sticky/fixed bottom action panel */
+.bottom-panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+
+  /* Visuals match your existing style (rounded, bordered, modern) */
+  border-top: 1px solid var(--border, #e5e7eb);
+  background: var(--panel-bg, rgba(255,255,255,0.9));
+  backdrop-filter: saturate(160%) blur(8px);
+
+  padding: 12px 16px;
+}
+
+/* If you want a nice inner container width for the bottom panel: */
+.bottom-panel > * {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 12px 16px;
+}
+/* Perfect circular color inputs across browsers */
+.color-circle {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  padding: 0;
+  border-radius: 9999px; /* fully rounded */
+  overflow: hidden;      /* clip inner swatch corners */
+  background: transparent;
+  cursor: pointer;
+  display: inline-block;
+}
+.color-circle::-webkit-color-swatch-wrapper { padding: 0; }
+.color-circle::-webkit-color-swatch { border: none; border-radius: 50%; }
+.color-circle::-moz-focus-inner { border: 0; padding: 0; }
+.color-circle::-moz-color-swatch { border: none; border-radius: 50%; }
 
 /* Panels look */
 .border{ border:1px solid var(--border); background:var(--panel); }
@@ -131,73 +327,3 @@ textarea:focus-visible{
 /* Pseudo “variants” (hover:, active:, sm:, lg:) */
 [class~="hover:opacity-80"]:hover{ opacity:.8; }
 [class~="active:scale-[0.96]"]:active{ transform:scale(.98); }
-
-/* Responsive */
-@media (min-width:640px){
-  [class~="sm:p-4"]{ padding:1rem; }
-  [class~="sm:flex-row"]{ flex-direction:row; }
-  [class~="sm:grid-cols-2"]{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-}
-@media (min-width:1024px){
-  [class~="lg:grid-cols-3"]{ grid-template-columns: repeat(3, minmax(0,1fr)); }
-}
-
-/* Misc utilities used */
-.emphasis{ font-weight:600; }
-
-/* Game page layout */
-.game-page {
-  position: relative;
-  min-height: 100%;
-}
-
-.game-content {
-  /* Ensure content isn't obscured by the sticky bottom panel (height + a little gap) */
-  padding-bottom: 160px;
-}
-
-/* Center container for the scoreboard */
-.game-center {
-  max-width: 960px;      /* tweak if you prefer tighter/wider */
-  margin: 0 auto;        /* centers */
-  padding: 0 16px;       /* breathing room on small screens */
-}
-
-/* Sticky/fixed bottom action panel */
-.bottom-panel {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 50;
-
-  /* Visuals match your existing style (rounded, bordered, modern) */
-  border-top: 1px solid var(--border, #e5e7eb);
-  background: var(--panel-bg, rgba(255,255,255,0.9));
-  backdrop-filter: saturate(160%) blur(8px);
-
-  padding: 12px 16px;
-}
-
-/* If you want a nice inner container width for the bottom panel: */
-.bottom-panel > * {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 12px 16px;
-}
-/* Perfect circular color inputs across browsers */
-.color-circle {
-  -webkit-appearance: none;
-  appearance: none;
-  border: none;
-  padding: 0;
-  border-radius: 9999px; /* fully rounded */
-  overflow: hidden;      /* clip inner swatch corners */
-  background: transparent;
-  cursor: pointer;
-  display: inline-block;
-}
-.color-circle::-webkit-color-swatch-wrapper { padding: 0; }
-.color-circle::-webkit-color-swatch { border: none; border-radius: 50%; }
-.color-circle::-moz-focus-inner { border: 0; padding: 0; }
-.color-circle::-moz-color-swatch { border: none; border-radius: 50%; }

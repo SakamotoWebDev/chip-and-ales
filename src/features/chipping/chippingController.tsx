@@ -26,6 +26,11 @@ export default function ChippingController({ startLocation, onComplete }: Props)
   const players = useRootStore(s => s.players)
   const scores = useRootStore(s => s.scores)
   const chipResults = useRootStore(s => s.chipResults)
+  const holedByPlayer = useMemo(() => {
+    return new Set(
+      chipResults.filter((c: { holed: any }) => c.holed).map((c: { playerId: any }) => c.playerId)
+    )
+  }, [chipResults])
   const addChipResult = useRootStore(s => s.addChipResult)
   const resetChipResults = useRootStore(s => s.resetChipResults)
 
@@ -48,6 +53,7 @@ export default function ChippingController({ startLocation, onComplete }: Props)
     const raw = distanceByPlayer[playerId]
     const dist = raw && raw.trim() !== '' ? Number(raw) : 0
     const chip: ChipResult = { playerId, distance: isFinite(dist) ? dist : 0, holed: false }
+    const isClosest = 
     addChipResult(chip)
     recordEvent({ type: GameEventType.CHIP_COMPLETE, payload: { playerId, distance: chip.distance, holed: false }, timestamp: Date.now() })
   }
@@ -114,7 +120,7 @@ export default function ChippingController({ startLocation, onComplete }: Props)
   return (
     <div className="rounded-2xl border p-3 sm:p-4">
       <div className="mb-2 text-lg font-semibold">Chipping — Shot Entry</div>
-      <div className="text-sm opacity-80 mb-3">
+      <div className="text-sm opacity-80 mb-3" style={{ overflowWrap: 'anywhere' }}>
         Turn order: {turnOrder.map(id => players.find(p => p.playerId === id)?.name).filter(Boolean).join(' → ')}
       </div>
 
@@ -122,13 +128,17 @@ export default function ChippingController({ startLocation, onComplete }: Props)
         {turnOrder.map(pid => {
           const p = players.find(pp => pp.playerId === pid)
           if (!p) return null
+          const isHoled = holedByPlayer.has(pid)
+          const isClosest = !someoneHoled && closestWinnerId === pid
           return (
-            <div key={pid} className="flex items-center gap-2 rounded-xl border p-2">
-              <div className="min-w-24 font-medium">{p.name}</div>
+            <div key={pid} className="flex flex-wrap items-center gap-2 rounded-xl border p-2">
+              <div className="font-medium" style={{ minWidth: 96, flexShrink: 1 }}>{p.name}</div>
+              
 
               {/* Optional numeric distance if not using judge mode */}
               <input
-                className="flex-1 rounded-md border px-2 py-1"
+                className="flex-1 rounded-md border px-2 py-2"
+                style={{ minWidth: 140 }}
                 inputMode="decimal"
                 placeholder="distance (optional)"
                 value={distanceByPlayer[pid] ?? ''}
@@ -138,46 +148,65 @@ export default function ChippingController({ startLocation, onComplete }: Props)
               />
 
               <Button
-                className="rounded-lg border px-3 py-1 hover:opacity-80 active:scale-[0.98]"
+                className="rounded-lg border px-3 py-2 hover:opacity-80 active:scale-[0.98]"
+                style={{ flexShrink: 0 }}
                 onClick={() => onAddChip(pid)}
               >
                 Add chip
               </Button>
 
               <Button
-                className="rounded-lg border px-3 py-1 hover:opacity-80 active:scale-[0.98]"
+                className={`
+                  rounded-lg border 
+                  px-3 
+                  py-2 
+                  hover:opacity-80 
+                  active:scale-[0.98] 
+                  ${isHoled ? 'btn-selected' : ''
+                  }`}
+                style={{
+                  flexShrink: 0 }}
+                aria-pressed={isHoled}
+                data-selected={isHoled ? 'true' : 'false'}
                 onClick={() => onHoleOut(pid)}
               >
-                Hole-out
+                {isHoled ? 'Holed!' : 'Hole-out'}
               </Button>
 
-              {/* Judge-style closest selection (only meaningful if no hole-out) */}
-              <label className="ml-2 flex items-center gap-1 text-md">
-                <input
-                  type="radio"
-                  name="closest"
-                  disabled={someoneHoled}
-                  checked={closestWinnerId === pid}
-                  onChange={() => setClosestWinnerId(pid)}
-                />
-                Closest
-              </label>
+              <Button 
+                className={`
+                  ml-2 
+                  rounded-lg border 
+                  px-3 
+                  py-2 
+                  hover:opacity-80 
+                  active:scale-[0.98] 
+                  ${isClosest ? 'btn-selected' : ''}
+                  `} 
+                style={{ flexShrink: 0 }}
+                aria-pressed={isClosest}
+                data-selected={isClosest || undefined}
+                disabled={someoneHoled}
+                onClick={() => setClosestWinnerId(pid)}
+              >  
+                {isClosest ? 'Closest!' : 'Closer?'}
+              </Button>
             </div>
           )
         })}
       </div>
 
-      <div 
-      className="mt-3"
-      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
         <Button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
+          style={{ flexShrink: 0 }}
           onClick={resetAllChips} >
           Reset Shot Entry
           </Button>
         
           <Button
             className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
+            style={{ flexShrink: 0 }}
             onClick={handleCompleteChipping} >
             Continue to Putting
           </Button>   

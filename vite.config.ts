@@ -4,7 +4,7 @@ import path from 'path'
 import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
-  base: '/chipndales/',
+  base: '/chip-and-ales/',
   plugins: [react()],
   resolve: { 
     alias: { 

@@ -30,12 +30,12 @@ export default function App() {
         <div className="p-4 space-y-3">
           <header className="font-semibold flex-row items-center justify-between gap-3 rounded-2xl border p-2">
             <div
-              className="px-2 mx-auto text-lg font-semibold items-center"
+              className="px-3 mx-auto text-lg font-semibold items-center justify-between"
               >
               Chip and Ales
             </div>
 
-            <nav className="flex-rrvs items-center gap-3">
+            <nav className="flex-rrvs items-center justify-between gap-3 px-2">
               <NavItem to="/home">Setup</NavItem>
               <NavItem to="/game">Game</NavItem>
               <NavItem to="/summary">Summary</NavItem>

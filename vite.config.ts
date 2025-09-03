@@ -6,7 +6,7 @@ export default defineConfig({
   base: '/chipndales/',
   plugins: [react()],
   build: {
-    outDir: 'dist',
+    outDir: 'docs',
     assetsDir: 'assets',
   },
   resolve: { 

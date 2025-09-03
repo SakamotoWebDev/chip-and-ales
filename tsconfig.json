@@ -6,8 +6,8 @@
     "moduleResolution": "Bundler",
     "skipLibCheck": true,
     "strict": true,
-    "baseUrl": "./src",
-    "paths": { "@/*": ["*"] },
+    "baseUrl": "./",
+    "paths": { "@/*": ["src/*"] },
     "types": ["vite/client",  "vitest/globals", "node"]
   },
   "include": ["src"]

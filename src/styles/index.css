@@ -311,6 +311,8 @@ textarea:focus-visible{
 /* Display / Flex / Grid */
 .flex{ display:flex; }
 .flex-col{ flex-direction:column; }
+.flex-row{ flex-direction: row;}
+.flex-rrvs{ flex-direction: row-reverse;}
 .items-center{ align-items:center; }
 .items-start{ align-items:flex-start; }
 .justify-between{ justify-content:space-between; }

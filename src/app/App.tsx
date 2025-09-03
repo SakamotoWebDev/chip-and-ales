@@ -28,13 +28,14 @@ export default function App() {
     <ThemeProvider>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <div className="p-4 space-y-3">
-          <header className="font-semibold flex sm:flex-row items-center justify-between gap-3 rounded-2xl border p-3">
+          <header className="font-semibold flex-row items-center justify-between gap-3 rounded-2xl border p-2">
             <div
-              className="px-2 mx-auto text-lg font-semibold">
+              className="px-2 mx-auto text-lg font-semibold items-center"
+              >
               Chip and Ales
             </div>
 
-            <nav className="flex items-center gap-3">
+            <nav className="flex-rrvs items-center gap-3">
               <NavItem to="/home">Setup</NavItem>
               <NavItem to="/game">Game</NavItem>
               <NavItem to="/summary">Summary</NavItem>

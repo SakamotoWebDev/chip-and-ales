@@ -36,7 +36,7 @@ export default function App() {
             </div>
 
             <nav className="flex-rrvs items-center justify-between gap-3 px-2">
-              <NavItem to="/home">Setup</NavItem>
+              <NavItem to="/">Setup</NavItem>
               <NavItem to="/game">Game</NavItem>
               <NavItem to="/summary">Summary</NavItem>
             </nav>

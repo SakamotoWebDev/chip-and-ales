@@ -2,7 +2,7 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react'
 
 type ButtonVariant = 'solid' | 'outline' | 'ghost'
-type ButtonTone = 'neutral' | 'primary' | 'success' | 'danger'
+type ButtonTone = 'neutral' | 'dark' | 'primary' | 'secondary' |'success' | 'danger'
 type ButtonSize = 'sm' | 'md' | 'lg'
 type ButtonFont = 'xsm' | 'sm' | 'md' | 'lg' | 'xlg'
 
@@ -19,9 +19,12 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const toneColors: Record<ButtonTone, { bg: string; fg: string; bd: string }> = {
   neutral: { bg: '#f6f6f7', fg: '#111', bd: '#d7d7db' },
-  primary: { bg: '#2563eb', fg: '#fff', bd: '#1e4fd6' },
-  success: { bg: '#16a34a', fg: '#fff', bd: '#0f7a37' },
+  dark: { bg: '#00004eff', fg: '#fff', bd: '#00004eff' },
+  primary: { bg: '#2d4b8aff', fg: '#fff', bd: '#2d4b8aff' },
+  secondary: { bg: '#487094ff', fg: '#fff', bd: '#487094ff' },
+  success: { bg: '#3c8e5aff', fg: '#fff', bd: '#3c8e5aff' },
   danger:  { bg: '#dc2626', fg: '#fff', bd: '#b71c1c' },
+  
 }
 
 const sizePad: Record<ButtonSize, { px: number; py: number; fs: number; br: number }> = {

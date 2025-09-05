@@ -17,6 +17,7 @@ function NavItem({ to, children }: { to: string; children: ReactNode }) {
         isActive ? 'bg-black text-white dark:bg-white dark:text-black' : ''
       }`}
       style={{ width: 'auto', flexShrink: 0, minHeight: 40 }}
+      tone= 'dark'
     >
       {children}
     </Button>

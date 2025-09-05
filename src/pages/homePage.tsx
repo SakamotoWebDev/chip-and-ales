@@ -61,7 +61,7 @@ export default function HomePage() {
         <Button
           className="w-full"
           disabled={!canStart}
-          tone="primary"
+          tone="success"
           onClick={() => {
             if (!canStart) {
               alert('Need 2–6 players before starting.')

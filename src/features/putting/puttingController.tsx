@@ -135,7 +135,7 @@ const checkMatchWinner = (): PlayerId | undefined => {
       })),
       deltas,
       winnerId,
-      startLocation: 'see previous screen', // The actual text was captured in ChippingController props; store it there when you add rounds here if you prefer.
+      startLocation: 'StartLocationPicker'
     }
 
     addRound(round)
@@ -165,8 +165,8 @@ const checkMatchWinner = (): PlayerId | undefined => {
 */}
   return (
     <div className="rounded-2xl border p-3 sm:p-4">
-      <div className="mb-2 text-lg font-semibold">Putting — Shot Entry</div>
-      <div className="rounded-border p-3 sm:p-2">One attempt each</div>
+      <div className="mb-1 text-lg font-semibold">Putting — Shot Entry</div>
+      <div className="rounded-border p-3 sm:p-2">Only one attempt per player.</div>
 
       {useShotTimer && (
         <div className="mb-2 text-sm opacity-80">
@@ -179,17 +179,28 @@ const checkMatchWinner = (): PlayerId | undefined => {
           <div key={p.playerId} className="flex items-center gap-2 rounded-xl border p-2">
             <div className="min-w-24 font-medium">{p.name}</div>
 
-            <div className="ml-auto flex gap-2">
+            <div className="ml-auto flex flex-wrap gap-2">
               <Button
-                className={`rounded-lg border px-3 py-1 hover:opacity-80 active:scale-[0.98] ${localMade[p.playerId] === false ? 'opacity-90' : ''}`}
-                onClick={() => savePutt(p.playerId, false)}>
-                  Miss
-                </Button>
+                className={`rounded-lg border px-3 py-2 hover:opacity-80 active:scale-[0.98] ${(localMade[p.playerId] === false) ? 'btn-selected btn-selected--danger' : ''}`}
+                style={{ flexShrink: 0 }}
+                aria-pressed={localMade[p.playerId] === false}
+                data-selected={(localMade[p.playerId] === false) ? 'true' : undefined}
+                data-selected-variant={(localMade[p.playerId] === false) ? 'danger' : undefined}
+                tone="secondary"
+                onClick={() => savePutt(p.playerId, false)}
+              >
+                Miss
+              </Button>
               <Button
-                className={`rounded-lg border px-3 py-1 hover:opacity-80 active:scale-[0.98] ${localMade[p.playerId] === true ? 'opacity-90' : ''}`}
-                onClick={() => savePutt(p.playerId, true)}>
-                  Made (+2)
-                </Button>
+                className={`rounded-lg border px-3 py-2 hover:opacity-80 active:scale-[0.98] ${(localMade[p.playerId] === true) ? 'btn-selected' : ''}`}
+                style={{ flexShrink: 0 }}
+                aria-pressed={localMade[p.playerId] === true}
+                data-selected={(localMade[p.playerId] === true) ? 'true' : undefined}
+                tone="secondary"
+                onClick={() => savePutt(p.playerId, true)}
+              >
+                Made (+2)
+              </Button>
             </div>
           </div>
         ))}
@@ -210,6 +221,7 @@ const checkMatchWinner = (): PlayerId | undefined => {
           </Button>
 */}
           <Button 
+            tone= "success"
             onClick={handleFinalizeRound}>
               Finalize Round
             </Button>

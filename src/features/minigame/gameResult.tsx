@@ -2,6 +2,7 @@
 import { useMemo } from 'react'
 import { useRootStore } from '../../store/createStore'
 import { PlayerId } from '../../types/domain'
+import Button from '@/components/common/button';
 
 export default function GameResult({ winnerId, onStartNewMatch }: { winnerId: PlayerId; onStartNewMatch: () => void }) {
   const players = useRootStore(s => s.players)
@@ -31,12 +32,13 @@ export default function GameResult({ winnerId, onStartNewMatch }: { winnerId: Pl
       </div>
 
       <div className="mt-4">
-        <button
+        <Button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
+          tone= "secondary"
           onClick={onStartNewMatch}
         >
           Start New Match
-        </button>
+        </Button>
       </div>
     </div>
   )

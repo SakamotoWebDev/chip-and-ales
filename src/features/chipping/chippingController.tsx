@@ -24,6 +24,7 @@ type Props = {
  */
 export default function ChippingController({ startLocation, onComplete }: Props) {
   const players = useRootStore(s => s.players)
+  const playerColor = useRootStore(c => c.players)
   const scores = useRootStore(s => s.scores)
   const chipResults = useRootStore(s => s.chipResults)
   const holedByPlayer = useMemo(() => {
@@ -145,6 +146,7 @@ export default function ChippingController({ startLocation, onComplete }: Props)
                   ${isClosest ? 'btn-selected' : ''}
                   `} 
                 style={{ flexShrink: 0 }}
+                tone= 'secondary'
                 aria-pressed={isClosest}
                 data-selected={isClosest || undefined}
                 disabled={someoneHoled}
@@ -152,8 +154,8 @@ export default function ChippingController({ startLocation, onComplete }: Props)
               >  
                 {isClosest ? 'Closest!' : 'Closer?'}
               </Button>
-
-              {/* Optional numeric distance if not using judge mode */}
+{/*}
+              {/* Optional numeric distance if not using judge mode
               <input
                 className="flex-1 rounded-md border px-2 py-2"
                 style={{ minWidth: 140 }}
@@ -172,7 +174,7 @@ export default function ChippingController({ startLocation, onComplete }: Props)
               >
                 Add chip
               </Button>
-
+*/}
               <Button
                 className={`
                   rounded-lg border 
@@ -182,8 +184,8 @@ export default function ChippingController({ startLocation, onComplete }: Props)
                   active:scale-[0.98] 
                   ${isHoled ? 'btn-selected' : ''
                   }`}
-                style={{
-                  flexShrink: 0 }}
+                style={{flexShrink: 0 }}
+                tone= 'secondary'
                 aria-pressed={isHoled}
                 data-selected={isHoled ? 'true' : 'false'}
                 onClick={() => onHoleOut(pid)}
@@ -198,6 +200,9 @@ export default function ChippingController({ startLocation, onComplete }: Props)
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
         <Button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
+          variant= "outline"
+          weight= "lg"
+          tone= "danger"
           style={{ flexShrink: 0 }}
           onClick={resetAllChips} >
           Reset Shot Entry
@@ -205,6 +210,7 @@ export default function ChippingController({ startLocation, onComplete }: Props)
         
           <Button
             className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
+            tone= "success"
             style={{ flexShrink: 0 }}
             onClick={handleCompleteChipping} >
             Continue to Putting

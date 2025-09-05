@@ -28,7 +28,7 @@ export default function StartLocationPicker({ previousWinnerName, onConfirm }: P
             style={{ display: 'flex' , justifyContent: 'flex-end' }}>
         <Button
           variant='solid'
-          tone='primary'
+          tone='success'
           size='md'
           weight='md'
           onClick={() => onConfirm(value.trim() || 'unspecified')}

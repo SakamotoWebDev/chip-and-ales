@@ -110,22 +110,22 @@ export default function GameDashboard() {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between rounded-2xl border p-3">
-        <div>
-          <div className="text-lg font-semibold">Match Dashboard</div>
+    <div className="space-y-3">
+      <div className="flex items-center justify-between rounded-2xl border p-2">
+          <div className="text-md font-semibold" >
+            Current Match
+            </div>
           <div className="text-sm opacity-80">
-            {matchInProgress ? `Round ${currentRound}` : 'No active match'} · Players: {players.length}
+            Players: {players.length} - {matchInProgress ? `Round ${currentRound}` : 'No active match'}
           </div>
-        </div>
         <></>
       </div>
 
-      <div style={{ paddingBottom: 120 }}>
+      <div style={{ paddingBottom: .1 }}>
 
       {/* Quick scoreboard */}
       {matchInProgress && (
-        <div className="rounded-2xl border p-3 max-w-3xl mx-auto">
+        <div className="rounded-2xl border p-2 max-w-3xl mx-auto">
           <div className="mb-2 text-sm font-semibold">Scoreboard</div>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {scores.map((s: { playerId: Key | null | undefined; total: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined }) => {
@@ -142,8 +142,8 @@ export default function GameDashboard() {
       )}
       </div>
       {matchInProgress && scoringUI && (
-        <div className="bottom_panel">
-          <div className="max-w-3xl mx-auto p-3">
+        <div>
+          <div className="max-w-3xl mx-auto p-2">
             {scoringUI}
           </div>
         </div>
@@ -236,7 +236,7 @@ export default function GameDashboard() {
         </div>
       )}
     </div>
-      <footer className="max-w-4xl mx-auto space-y-10 p-4">
+      <footer className="max-w-4xl mx-auto space-y-10 p-2">
         {matchInProgress && (
           <Button
             className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98] w-full"

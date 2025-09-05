@@ -58,18 +58,19 @@ export default function PlayerSetup({ showHandicap = false }: Props) {
 
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {players.map(p => (
-            <div key={p.playerId} className="flex items-center justify-between rounded-md border p-2">
-              <div className="flex items-center gap-2 w-full">
+            <div key={p.playerId} className="flex items-end justify-between rounded-md border p-2">
+              <div className="flex items-center gap-2 w-full flex-nowrap">
                 <input
                   className="color-circle"
                   type="color"
                   value={p.color}
                   onChange={(e) => updatePlayer({ ...p, color: e.target.value })}
                   title="Color"
-                  style={{ width: 32, height: 32 }}
+                  style={{ width: 28, height: 28, flexShrink: 0 }}
                 />
                 <input
-                  className="rounded-md border px-0.5 py-0.5 w-third"
+                  className="rounded-md border px-2 py-2 flex-1"
+                  style={{ width: 'auto', minWidth: 0 }}
                   value={p.name}
                   onChange={(e) => updatePlayer({ ...p, name: e.target.value })}
                 />

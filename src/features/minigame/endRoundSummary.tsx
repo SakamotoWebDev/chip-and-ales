@@ -36,6 +36,7 @@ export default function EndRoundSummary({ round, onNextRound }: { round: RoundRe
       <div style={{ display: 'flex' , justifyContent: 'flex-end' }}>
         <Button
           className="rounded-xl border px-4 py-2 hover:opacity-80 active:scale-[0.98]"
+          tone= "success"
           onClick={onNextRound} >
           Next Round
           </Button>
